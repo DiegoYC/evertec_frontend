@@ -1,7 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+const credentials = {
+  encodedCredentials: btoa(`user1:pass1`)
+};
+
 export const fetchTareas = createAsyncThunk("tareas/fetchTareas", async () => {
-  const response = await fetch("http://localhost:8080/api/v1/tareas/");
+  const response = await fetch("http://localhost:8080/api/v1/tareas/",{
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Basic ${credentials.encodedCredentials}`
+    }
+  });
   const tareas = await response.json();
   console.log(tareas);
   return tareas;
@@ -12,6 +21,7 @@ export const postTarea = createAsyncThunk("tareas/postTarea", async (tarea, { di
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Basic ${credentials.encodedCredentials}`
     },
     body: JSON.stringify(tarea),
   });
@@ -24,6 +34,7 @@ export const updateTarea = createAsyncThunk("tareas/updateTarea", async (tarea, 
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Basic ${credentials.encodedCredentials}`
     },
     body: JSON.stringify(tarea),
   });
@@ -34,6 +45,10 @@ export const updateTarea = createAsyncThunk("tareas/updateTarea", async (tarea, 
 export const deleteTarea = createAsyncThunk("tareas/deleteTarea", async (id, { dispatch }) => {
   await fetch(`http://localhost:8080/api/v1/tareas/${id.id}`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Basic ${credentials.encodedCredentials}`
+    }
   });
   dispatch(fetchTareas());
 });
