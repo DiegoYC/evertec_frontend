@@ -4,7 +4,7 @@ const credentials = {
   encodedCredentials: btoa(`user1:pass1`)
 };
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:8080/api/v1";
+const backendUrl = process.env.REACT_APP_BACKEND_URL || "https://seal-app-tlq2e.ondigitalocean.app/api/v1";
 
 
 export const fetchTareas = createAsyncThunk("tareas/fetchTareas", async () => {
