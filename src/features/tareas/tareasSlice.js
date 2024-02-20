@@ -4,8 +4,11 @@ const credentials = {
   encodedCredentials: btoa(`user1:pass1`)
 };
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:8080/api/v1";
+
+
 export const fetchTareas = createAsyncThunk("tareas/fetchTareas", async () => {
-  const response = await fetch("http://localhost:8080/api/v1/tareas/",{
+  const response = await fetch(`${backendUrl}/tareas/`,{
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Basic ${credentials.encodedCredentials}`
@@ -17,7 +20,7 @@ export const fetchTareas = createAsyncThunk("tareas/fetchTareas", async () => {
 });
 
 export const postTarea = createAsyncThunk("tareas/postTarea", async (tarea, { dispatch }) => {
-  const response = await fetch("http://localhost:8080/api/v1/tareas/", {
+  const response = await fetch(`${backendUrl}/tareas/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +33,7 @@ export const postTarea = createAsyncThunk("tareas/postTarea", async (tarea, { di
 });
 
 export const updateTarea = createAsyncThunk("tareas/updateTarea", async (tarea, { dispatch }) => {
-  const response = await fetch(`http://localhost:8080/api/v1/tareas/${tarea.id}`, {
+  const response = await fetch(`${backendUrl}/tareas/${tarea.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -43,7 +46,7 @@ export const updateTarea = createAsyncThunk("tareas/updateTarea", async (tarea, 
 });
 
 export const deleteTarea = createAsyncThunk("tareas/deleteTarea", async (id, { dispatch }) => {
-  await fetch(`http://localhost:8080/api/v1/tareas/${id.id}`, {
+  await fetch(`${backendUrl}/tareas/${id.id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
