@@ -40,7 +40,7 @@ export function EditTarea() {
       );
 
       setError(null);
-      history.push("/");
+      history.push('/list-tarea');
     } else {
       setError("Por favor ingrese los datos");
     }

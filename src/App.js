@@ -1,8 +1,9 @@
+import React from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import AuthForm from "./features/auth/AuthForm";
 
 import { AddTarea } from "./features/tareas/AddTarea";
 import { EditTarea } from "./features/tareas/EditTarea";
-import React from "react";
 import { TareaList } from "./features/tareas/TareaList";
 
 export default function App() {
@@ -10,13 +11,16 @@ export default function App() {
     <Router>
       <div>
         <Switch>
+          <Route exact path="/">
+            <AuthForm />
+          </Route>
           <Route path="/add-tarea">
             <AddTarea />
           </Route>
           <Route path="/edit-tarea">
             <EditTarea />
           </Route>
-          <Route path="/">
+          <Route path="/list-tarea">
             <TareaList />
           </Route>
         </Switch>

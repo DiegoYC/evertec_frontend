@@ -1,17 +1,31 @@
-import { fetchTareas, deleteTarea } from "./tareasSlice";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { fetchTareas, deleteTarea } from "./tareasSlice";
+import { logout } from '../../features/auth/authSlice';
 
 export function TareaList() {
   const dispatch = useDispatch();
 
   const { entities } = useSelector((state) => state.tareas);
   const loading = useSelector((state) => state.loading);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); 
+
+  useEffect(() => {
+    dispatch(fetchTareas());
+  }, [dispatch]);
 
   const handleDelete = (id) => {
     dispatch(deleteTarea({ id }));
   };
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  if (!isLoggedIn) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="container">
@@ -26,6 +40,7 @@ export function TareaList() {
           <Link to="/add-tarea">
             <button className="button-primary">Agregar Tarea</button>
           </Link>
+          <button onClick={handleLogout}>Cerrar Sesión</button>
         </div>
       </div>
       <div className="row">
@@ -43,8 +58,7 @@ export function TareaList() {
               </tr>
             </thead>
             <tbody>
-              {entities.length &&
-                entities.map(({ id, descripcion, fechaCreacion, fechaModificacion, vigente}, i) => (
+              {entities.map(({ id, descripcion, fechaCreacion, fechaModificacion, vigente}, i) => (
                   <tr key={i}>
                     <td>{id}</td>
                     <td>{descripcion}</td>

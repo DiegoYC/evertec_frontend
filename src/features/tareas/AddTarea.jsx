@@ -9,7 +9,7 @@ export function AddTarea() {
   const history = useHistory();
 
   const [descripcion, setDescripcion] = useState("");
-  const [fechaCreacion] = useState(new Date().toISOString());
+  const [fechaCreacion] = "";
   const [fechaModificacion] = "";
 
   const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ export function AddTarea() {
         })
       );
       setError(null);
-      history.push("/");
+      history.push('/list-tarea');
     } else {
       setError("Por favor ingrese los datos");
     }

@@ -1,30 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const credentials = {
-  encodedCredentials: btoa(`user1:pass1`)
+const getTokenFromLocalStorage = () => {
+  return localStorage.getItem('token');
 };
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL || "https://corsproxy.io/?https%3A%2F%2Fstingray-app-ik4ek.ondigitalocean.app/api/v1";
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL || "https://monkfish-app-zuf2e.ondigitalocean.app/api/v1/tareas/";
+const authToken = getTokenFromLocalStorage();
 
 export const fetchTareas = createAsyncThunk("tareas/fetchTareas", async () => {
-  const response = await fetch(`${backendUrl}/tareas/`,{
+  const response = await fetch(`${backendUrl}`,{
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Basic ${credentials.encodedCredentials}`
+      "Authorization": `Bearer ${authToken}`
     }
   });
   const tareas = await response.json();
-  console.log(tareas);
   return tareas;
 });
 
 export const postTarea = createAsyncThunk("tareas/postTarea", async (tarea, { dispatch }) => {
-  const response = await fetch(`${backendUrl}/tareas/`, {
+  const response = await fetch(`${backendUrl}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Basic ${credentials.encodedCredentials}`
+      "Authorization": `Bearer ${authToken}`
     },
     body: JSON.stringify(tarea),
   });
@@ -33,11 +32,11 @@ export const postTarea = createAsyncThunk("tareas/postTarea", async (tarea, { di
 });
 
 export const updateTarea = createAsyncThunk("tareas/updateTarea", async (tarea, { dispatch }) => {
-  const response = await fetch(`${backendUrl}/tareas/${tarea.id}`, {
+  const response = await fetch(`${backendUrl}${tarea.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Basic ${credentials.encodedCredentials}`
+      "Authorization": `Bearer ${authToken}`
     },
     body: JSON.stringify(tarea),
   });
@@ -46,11 +45,11 @@ export const updateTarea = createAsyncThunk("tareas/updateTarea", async (tarea, 
 });
 
 export const deleteTarea = createAsyncThunk("tareas/deleteTarea", async (id, { dispatch }) => {
-  await fetch(`${backendUrl}/tareas/${id.id}`, {
+  await fetch(`${backendUrl}${id.id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Basic ${credentials.encodedCredentials}`
+      "Authorization": `Bearer ${authToken}`
     }
   });
   dispatch(fetchTareas());
@@ -91,32 +90,26 @@ const tareasSlice = createSlice({
       })
       .addCase(postTarea.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("Tarea creada exitosamente:", action.payload);
       })
       .addCase(postTarea.rejected, (state, action) => {
         state.loading = false;
-        console.error("Error al crear tarea:", action.error.message);
       })
       .addCase(deleteTarea.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(deleteTarea.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("Tarea eliminada exitosamente");
       })
       .addCase(deleteTarea.rejected, (state, action) => {
         state.loading = false;
-        console.error("Error al eliminar tarea:", action.error.message);
       }).addCase(updateTarea.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(updateTarea.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("Tarea actualizada exitosamente:", action.payload);
       })
       .addCase(updateTarea.rejected, (state, action) => {
         state.loading = false;
-        console.error("Error al actualizar tarea:", action.error.message);
       });
   },
 });
