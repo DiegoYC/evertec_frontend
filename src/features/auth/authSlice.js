@@ -6,7 +6,7 @@ const initialState = {
   error: null,
 };
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL || "https://monkfish-app-zuf2e.ondigitalocean.app";
+const backendUrl = process.env.REACT_APP_BACKEND_AUTH_URL || "https://monkfish-app-zuf2e.ondigitalocean.app";
 
 const authSlice = createSlice({
   name: 'auth',
