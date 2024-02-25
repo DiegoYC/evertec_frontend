@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { postTarea } from "./tareasSlice";
 
 export function AddTarea() {
@@ -9,7 +9,6 @@ export function AddTarea() {
   const history = useHistory();
 
   const [descripcion, setDescripcion] = useState("");
-  const [fechaCreacion] = "";
   const [fechaModificacion] = "";
 
   const [error, setError] = useState(null);

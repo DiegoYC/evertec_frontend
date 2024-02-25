@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { updateTarea } from "./tareasSlice";
 
 export function EditTarea() {
@@ -17,15 +17,12 @@ export function EditTarea() {
 
   const [vigente, setVigente] = useState(true);
 
-
   const [error, setError] = useState(null);
   const handleCheckboxChange = (event) => {
     setVigente(event.target.checked);
   };
 
   const [descripcion, setDescripcion] = useState(tarea.descripcion);
-  const [fechaModificacion] = "";
-
   const handleDescripcion = (e) => setDescripcion(e.target.value);
 
   const handleClick = () => {

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { jwtDecode } from 'jwt-decode';
 
 const initialState = {
   isLoggedIn: localStorage.getItem('token') ? true : false,
@@ -32,10 +33,24 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    checkTokenExpiration: (state) => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        const currentTime = Math.floor(Date.now() / 1000);
+
+        if (decodedToken.exp && decodedToken.exp < currentTime) {
+          localStorage.removeItem('token');
+          state.isLoggedIn = false;
+          state.loading = false;
+          state.error = null;
+        }
+      }
+    },
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout, checkTokenExpiration } = authSlice.actions;
 
 export const loginUser = (credentials) => async (dispatch) => {
   dispatch(loginStart());
@@ -47,16 +62,26 @@ export const loginUser = (credentials) => async (dispatch) => {
       },
       body: JSON.stringify(credentials),
     });
-    const data = await response.json();
     if (response.ok) {
+      const data = await response.json();
       localStorage.setItem('token', data.token);
       dispatch(loginSuccess());
     } else {
-      dispatch(loginFailure(data.message || 'Error de inicio de sesión'));
+      const errorData = await response.json();
+      dispatch(loginFailure(errorData.message || 'Error de inicio de sesión'));
     }
   } catch (error) {
-    dispatch(loginFailure(error.message));
+    console.error("Error al iniciar sesión:", error);
+    dispatch(loginFailure('Error de conexión'));
+    dispatch(logout());
   }
+};
+
+export const checkTokenExpirationMiddleware = () => (next) => (action) => {
+  if (action.type !== checkTokenExpiration.type) {
+    next(checkTokenExpiration);
+  }
+  return next(action);
 };
 
 export default authSlice.reducer;

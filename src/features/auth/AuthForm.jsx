@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from './authSlice';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const AuthForm = () => {
   const [username, setUsername] = useState('');
@@ -10,7 +10,6 @@ const AuthForm = () => {
   const loading = useSelector((state) => state.auth.loading);
   const error = useSelector((state) => state.auth.error);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

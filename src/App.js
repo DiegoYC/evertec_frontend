@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"; // Importa Route
 import PrivateRoute from "./components/PrivateRoute";
 import AuthForm from "./features/auth/AuthForm";
 import { AddTarea } from "./features/tareas/AddTarea";
 import { EditTarea } from "./features/tareas/EditTarea";
 import { TareaList } from "./features/tareas/TareaList";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { checkTokenExpiration } from "./features/auth/authSlice";
 
 export default function App() {
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    dispatch(checkTokenExpiration());
+  }, [dispatch]);
 
   return (
     <Router>
