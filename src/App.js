@@ -1,12 +1,15 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"; // Importa Route
+import PrivateRoute from "./components/PrivateRoute";
 import AuthForm from "./features/auth/AuthForm";
-
 import { AddTarea } from "./features/tareas/AddTarea";
 import { EditTarea } from "./features/tareas/EditTarea";
 import { TareaList } from "./features/tareas/TareaList";
+import { useSelector } from 'react-redux';
 
 export default function App() {
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
   return (
     <Router>
       <div>
@@ -14,15 +17,9 @@ export default function App() {
           <Route exact path="/">
             <AuthForm />
           </Route>
-          <Route path="/add-tarea">
-            <AddTarea />
-          </Route>
-          <Route path="/edit-tarea">
-            <EditTarea />
-          </Route>
-          <Route path="/list-tarea">
-            <TareaList />
-          </Route>
+          <PrivateRoute path="/add-tarea" isLoggedIn={isLoggedIn} component={AddTarea} />
+          <PrivateRoute path="/edit-tarea" isLoggedIn={isLoggedIn} component={EditTarea} />
+          <PrivateRoute path="/list-tarea" isLoggedIn={isLoggedIn} component={TareaList} />
         </Switch>
       </div>
     </Router>
