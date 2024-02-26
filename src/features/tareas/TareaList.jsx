@@ -59,12 +59,12 @@ export function TareaList() {
             <tbody>
               {entities.map(({ id, descripcion, fechaCreacion, fechaModificacion, vigente}, i) => (
                   <tr key={i}>
-                    <td>{id}</td>
-                    <td>{descripcion}</td>
-                    <td>{fechaCreacion}</td>
-                    <td>{fechaModificacion}</td>
-                    <td><input type="checkbox" checked={vigente} disabled="disabled"/></td>
-                    <td>
+                    <td className="td-custom">{id}</td>
+                    <td className="td-custom">{descripcion}</td>
+                    <td className="td-custom">{fechaCreacion}</td>
+                    <td className="td-custom">{fechaModificacion}</td>
+                    <td className="td-custom"><input aria-disabled="true" type="checkbox" checked={vigente} disabled="disabled"/></td>
+                    <td className="td-custom">
                       <Link to={`/edit-tarea/${id}`}>
                         <button className="button-primary">Editar</button>
                       </Link>

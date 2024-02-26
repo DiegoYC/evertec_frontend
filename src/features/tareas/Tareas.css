@@ -6,8 +6,8 @@
   }
 
   .row {
-    display: flex; /* Establece el contenedor como un flex container */
-    justify-content: center; /* Centra horizontalmente los elementos hijos */
+    display: flex;
+    justify-content: center;
   }
 
   .three.columns {
@@ -35,4 +35,16 @@
   .button-head button.logout-button:hover {
     background-color: #ff3b30;
     color: white;
+  }
+
+  td,th {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #4a4a4a
+  }
+
+  input[type=checkbox],input[type=radio] [disabled] [checked] {
+    width: 15px;
+    height: 15px;
+    filter: invert(100%) hue-rotate(18deg) brightness(5);
   }

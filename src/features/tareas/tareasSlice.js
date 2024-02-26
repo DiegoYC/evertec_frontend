@@ -11,7 +11,7 @@ export const fetchTareas = createAsyncThunk("tareas/fetchTareas", async () => {
   const response = await fetch(`${backendUrl}`,{
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${authToken}`
+      "Authorization": `Bearer ${getTokenFromLocalStorage()}`
     }
   });
   const tareas = await response.json();
