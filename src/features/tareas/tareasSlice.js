@@ -5,7 +5,6 @@ const getTokenFromLocalStorage = () => {
 };
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL || "https://monkfish-app-zuf2e.ondigitalocean.app/api/v1/tareas/";
-const authToken = getTokenFromLocalStorage();
 
 export const fetchTareas = createAsyncThunk("tareas/fetchTareas", async () => {
   const response = await fetch(`${backendUrl}`,{
@@ -23,7 +22,7 @@ export const postTarea = createAsyncThunk("tareas/postTarea", async (tarea, { di
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${authToken}`
+      "Authorization": `Bearer ${getTokenFromLocalStorage()}`
     },
     body: JSON.stringify(tarea),
   });
@@ -36,7 +35,7 @@ export const updateTarea = createAsyncThunk("tareas/updateTarea", async (tarea, 
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${authToken}`
+      "Authorization": `Bearer ${getTokenFromLocalStorage()}`
     },
     body: JSON.stringify(tarea),
   });
@@ -49,7 +48,7 @@ export const deleteTarea = createAsyncThunk("tareas/deleteTarea", async (id, { d
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${authToken}`
+      "Authorization": `Bearer ${getTokenFromLocalStorage()}`
     }
   });
   dispatch(fetchTareas());
