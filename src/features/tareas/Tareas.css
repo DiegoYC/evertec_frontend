@@ -1,0 +1,38 @@
+  .container {
+    background-color: rgba(235, 235, 235, 0.9);
+    padding: 20px; 
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .row {
+    display: flex; /* Establece el contenedor como un flex container */
+    justify-content: center; /* Centra horizontalmente los elementos hijos */
+  }
+
+  .three.columns {
+    margin: 0 auto;
+    width: 50%;
+  }
+
+  .button-head {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  
+  .button-head button {
+    margin-left: 10px;
+  }
+
+  .button-head button.logout-button {
+    background-color: transparent;
+    color: #ff3b30;
+    border: 1px solid #ff3b30;
+    transition: color 0.3s, border-color 0.3s; /* Agrega una transición suave */
+  }
+  
+  .button-head button.logout-button:hover {
+    background-color: #ff3b30;
+    color: white;
+  }

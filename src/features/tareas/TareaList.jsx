@@ -4,6 +4,8 @@ import { Link, Redirect } from "react-router-dom";
 import { fetchTareas, deleteTarea } from "./tareasSlice";
 import { logout } from '../../features/auth/authSlice';
 
+import './Tareas.css';
+
 export function TareaList() {
   const dispatch = useDispatch();
 
@@ -30,18 +32,14 @@ export function TareaList() {
   return (
     <div className="container">
       <div className="row">
-        <h1>Redux CRUD Tareas</h1>
+        <h1>Redux CRUD - Lista de Tareas</h1>
       </div>
-      <div className="row">
-        <div className="two columns">
+      <div className="button-head">
+        <Link to="/add-tarea">
+          <button className="button-primary">Agregar Tarea</button>
+        </Link>
 
-        </div>
-        <div className="two columns">
-          <Link to="/add-tarea">
-            <button className="button-primary">Agregar Tarea</button>
-          </Link>
-          <button onClick={handleLogout}>Cerrar Sesión</button>
-        </div>
+        <button className="logout-button" onClick={handleLogout}>Cerrar Sesión</button>
       </div>
       <div className="row">
         {loading ? (
@@ -54,7 +52,8 @@ export function TareaList() {
                 <th>Tarea</th>
                 <th>Creación</th>
                 <th>Actualización</th>
-                <th>Activo</th>
+                <th>Activo?</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -66,10 +65,10 @@ export function TareaList() {
                     <td>{fechaModificacion}</td>
                     <td><input type="checkbox" checked={vigente} disabled="disabled"/></td>
                     <td>
-                      <button onClick={() => handleDelete(id)}>Eliminar</button>
                       <Link to={`/edit-tarea/${id}`}>
-                        <button>Editar</button>
+                        <button className="button-primary">Editar</button>
                       </Link>
+                      <button onClick={() => handleDelete(id)} className="button-primary">Eliminar</button>
                     </td>
                   </tr>
                 ))}

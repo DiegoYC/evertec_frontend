@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from './authSlice';
 import { Redirect } from 'react-router-dom';
+import './AuthForm.css';
 
 const AuthForm = () => {
   const [username, setUsername] = useState('');
@@ -21,7 +22,7 @@ const AuthForm = () => {
   }
 
   return (
-    <div>
+    <div className="auth-form-container">
       <h2>Iniciar sesión</h2>
       <form onSubmit={handleSubmit}>
         <div>
