@@ -33,7 +33,7 @@ const AuthForm = () => {
           <label>Contraseña:</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} className='login-button'>
           {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
         </button>
         {error && <p>{error}</p>}
